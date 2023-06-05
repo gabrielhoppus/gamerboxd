@@ -8,10 +8,12 @@ import { handleApplicationErrors } from "@/middlewares/error.middleware";
 import router from "./routes/app.routes";
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(router);
-app.use(handleApplicationErrors);
+app
+    .use(cors())
+    .use(express.json())
+    .get('/health', (_req, res) => res.send('OK!'))
+    .use(router)
+    .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
     connectDb();

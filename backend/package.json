@@ -4,13 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "dotenv -e .env.test -- jest --passWithNoTests --runInBand",
-    "test:coverage": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand --coverage --collectCoverageFrom='./src/**'",
     "build": "tsc",
-    "dev": "cross-env NODE_ENV=development tsx watch src/server.ts",
-    "prisma:seed": "npx prisma db seed",
+    "test": "cross-env NODE_ENV=test jest --passWithNoTests --detectOpenHandles --forceExit --runInBand",
+    "test:coverage": "cross-env NODE_ENV=test jest --passWithNoTests --runInBand --coverage --collectCoverageFrom='./src/**'",
+    "test:migration:run": "npm run test:load-envs prisma migrate deploy",
+    "test:migration:generate": "npm run test:load-envs prisma migrate reset dev",
+    "test:watch": "cross-env NODE_ENV=test jest --watch --passWithNoTests --runInBand",
     "test:load-envs": "dotenv -e .env.test",
-    "test:migration:generate": "npm run test:load-envs prisma migrate dev"
+    "test:push": "npm run test:load-envs prisma db push",
+    "test:seed": "npm run test:load-envs prisma db seed",
+    "dev:load-envs": "dotenv -e .env.development",
+    "dev:push": "npm run dev:load-envs prisma db push",
+    "dev:migration:run": "npm run dev:load-envs prisma migrate deploy",
+    "dev:migration:generate": "npm run dev:load-envs prisma migrate reset dev",
+    "dev:seed": "npm run dev:load-envs prisma db seed ",
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/server.ts' -e ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -59,7 +67,9 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "3.9.0",
     "tsx": "^3.12.6",
+    "ttypescript": "^1.5.13",
     "typescript": "^5.0.3",
     "typescript-transform-paths": "^3.4.6"
   }

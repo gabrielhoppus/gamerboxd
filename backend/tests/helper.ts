@@ -6,10 +6,7 @@ import "dotenv/config"
 import prisma from '@/config/database.connection';
 
 export async function cleanDb() {
-    await prisma.reviews.deleteMany({});
-    await prisma.users.deleteMany({});
-    await prisma.games.deleteMany({});
-
+    await prisma.user.deleteMany({});
 }
 
 export async function generateValidToken(user: UserEntity) {

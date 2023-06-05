@@ -64,7 +64,7 @@ describe('PUT /users/signin', () => {
         const email = faker.internet.email()
         const hashedPassword = await bcrypt.hash(incomingPassword, 10);
 
-        await prisma.users.create({
+        await prisma.user.create({
             data: {
                 name: faker.name.fullName(),
                 email: email,
@@ -72,7 +72,7 @@ describe('PUT /users/signin', () => {
             },
         });
 
-        const result = await api.put('/users/signin').send({ email, password: incomingPassword });
+        const result = await api.post('/users/signin').send({ email, password: incomingPassword });
 
         expect(result.status).toEqual(200);
 
@@ -107,7 +107,7 @@ describe('DELETE /users/delete/:id', () => {
         const result = await api.delete(`/users/delete/${id}`)
         expect(result.status).toEqual(404);
     });
-    it('shoudl respond with 500 when an user id is not numeric', async () => {
+    it('should respond with 500 when an user id is not numeric', async () => {
         const id = faker.lorem.word();
         const result = await api.delete(`/users/delete/${id}`)
         expect(result.status).toEqual(500);
