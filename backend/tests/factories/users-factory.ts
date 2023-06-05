@@ -8,7 +8,7 @@ export async function createUser(params: Partial<UserEntity> = {}) {
   const incomingPassword = params.password || faker.internet.password(6);
   const hashedPassword = await bcrypt.hash(incomingPassword, 10);
 
-  return prisma.users.create({
+  return prisma.user.create({
     data: {
       name: faker.name.fullName(),
       email: params.email || faker.internet.email(),
@@ -18,7 +18,7 @@ export async function createUser(params: Partial<UserEntity> = {}) {
 }
 
 export async function loginUser(token: string, id: number) {
-  return await prisma.users.update({
+  return await prisma.session.update({
     where: {
         id,
     },

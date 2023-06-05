@@ -1,7 +1,7 @@
 export type ApplicationError = {
     name: string;
-    message?: string;
-    email?: string;
+    message: string;
+    email: string;
 };
 
 export type RequestError = {
@@ -10,4 +10,4 @@ export type RequestError = {
     statusText: string;
     name: string;
     message: string;
-  };
+};

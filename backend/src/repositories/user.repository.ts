@@ -3,7 +3,7 @@ import prisma from "@/config/database.connection";
 
 
 async function findByEmail(email: string) {
-    return await prisma.users.findUnique({
+    return await prisma.user.findUnique({
         where: {
             email
         }
@@ -11,13 +11,13 @@ async function findByEmail(email: string) {
 }
 
 async function createUser( user : NewUser) {
-    return await prisma.users.create({
+    return await prisma.user.create({
         data: user
     });
 }
 
     async function findUsers() {
-        return await prisma.users.findMany({
+        return await prisma.user.findMany({
             select: {
                 id: true,
                 name: true,
@@ -25,19 +25,23 @@ async function createUser( user : NewUser) {
         });
     }
 
-    async function loginUser(token: string, id: number) {
-        return await prisma.users.update({
+    async function loginUser(token: string, userId: number) {
+        return await prisma.session.upsert({
             where: {
-                id,
+                userId,
             },
-            data: {
-                token,
+            create: {
+                userId,
+                token
+            }, 
+            update: {
+                token
             }
         })
     }
 
     async function findById(id: number) {
-        return await prisma.users.findUnique({
+        return await prisma.user.findFirst({
             where: {
                 id,
             }
@@ -45,7 +49,7 @@ async function createUser( user : NewUser) {
     }
 
     async function deleteUser(id: number) {
-        return await prisma.users.delete({
+        return await prisma.user.delete({
             where: {
                 id,
             }
