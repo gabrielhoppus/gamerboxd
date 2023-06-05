@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "reviews" ALTER COLUMN "grade" SET DATA TYPE DECIMAL;
