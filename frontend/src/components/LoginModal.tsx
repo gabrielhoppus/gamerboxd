@@ -1,24 +1,35 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../context/UserContext";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 type LoginProps = {
   LoginVisible: any,
   onClose: any,
+  setHeaderBackground: any,
 }
 
-export default function LoginModal({ LoginVisible, onClose }: LoginProps) {
+export default function LoginModal({ LoginVisible, onClose, setHeaderBackground }: LoginProps) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { setUserData } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   if (!LoginVisible) return null;
 
-  function userSignin(e: any){
+  async function userSignin(e: any) {
     e.preventDefault();
     const body = { email, password };
-    axios.post(`http://localhost:5000/users/signin`, body)
-      .then(() => {
+    await axios.post(`http://localhost:5000/users/signin`, body)
+      .then((res) => {
+        setUserData(res.data)
         alert("Login realizado com sucesso!");
         onClose();
+        setEmail('');
+        setPassword('');
+        setHeaderBackground('gbxd-50');
+        navigate('/home');
       })
       .catch((err) => {
         alert(err.message);

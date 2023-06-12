@@ -9,6 +9,7 @@ type RegisterProps = {
 export default function RegisterModal({ RegisterVisible, onClose }: RegisterProps) {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [image, setImage] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   
@@ -16,11 +17,15 @@ export default function RegisterModal({ RegisterVisible, onClose }: RegisterProp
 
   function userSignup(e: any){
     e.preventDefault();
-    const body = { name, email, password };
+    const body = { name, email, image, password };
     axios.post(`http://localhost:5000/users/signup`, body)
       .then(() => {
         alert("Cadastro realizado com sucesso!");
-        setName(name);
+        setName('');
+        setEmail('');
+        setImage('');
+        setPassword('');
+        setConfirmPassword('');
         onClose();
       })
       .catch((err) => {
@@ -38,7 +43,7 @@ export default function RegisterModal({ RegisterVisible, onClose }: RegisterProp
         <div className="exit text-white text-2xl flex justify-end" onClick={() => onClose()}>
           x
         </div>
-        <form onSubmit={userSignup} className="w-[600px] h-[600px] bg-[#14181C]">
+        <form onSubmit={userSignup} className="w-[600px] h-[710px] bg-[#14181C]">
           <p className="mt-[30px] flex justify-center text-white text-3xl">REGISTER NOW</p>
           <div className="mt-[30px] flex flex-col ml-[50px]">
             <label htmlFor='name' className="text-white text-1xl">Name</label>
@@ -60,6 +65,17 @@ export default function RegisterModal({ RegisterVisible, onClose }: RegisterProp
               placeholder="Email"
               value={email}
               onChange={e => setEmail(e.target.value)}
+              required />
+          </div>
+          <div className="mt-[30px] flex flex-col ml-[50px]">
+            <label htmlFor='image' className="text-white text-1xl">Image</label>
+            <input
+              type="text"
+              id="image"
+              className="mt-[10px] w-[500px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Image"
+              value={image}
+              onChange={e => setImage(e.target.value)}
               required />
           </div>
           <div className="mt-[30px] flex flex-col ml-[50px]">

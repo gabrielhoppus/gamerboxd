@@ -2,6 +2,7 @@ export type UserEntity = {
     id: number,
     name: string,
     email: string,
+    image: string,
     password: string,
     token: string,
 }

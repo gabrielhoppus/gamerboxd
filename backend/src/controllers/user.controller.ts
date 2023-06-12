@@ -4,9 +4,9 @@ import { NewLogin, NewUser, checkId } from "@/protocols/user.protocol";
 
 
 export async function createUser(req: Request, res: Response, next: NextFunction) {
-    const { name, email, password } = req.body as NewUser;
+    const { name, email, image, password } = req.body as NewUser;
     try {
-        await userService.createUser({ name, email, password });
+        await userService.createUser({ name, email, image, password });
         return res.sendStatus(201);
     } catch (err) {
         next(err);
@@ -22,8 +22,9 @@ export async function loginUser(req: Request, res: Response, next: NextFunction)
     const { email, password } = req.body as NewLogin;
     try {
         const token = await userService.loginUser({ email, password });
+        const user = await userService.findUserByEmail(email);
 
-        return res.status(200).send({ token })
+        return res.status(200).send({ token: token, user: user })
     } catch (err) {
         next(err);
     }

@@ -6,19 +6,25 @@ import { NewUser, NewLogin } from "@/protocols/user.protocol";
 import dotenv from "dotenv";
 
 
-async function createUser({ name, email, password }: NewUser) {
+async function createUser({ name, email, image, password }: NewUser) {
     const checkEmail = await userRepository.findByEmail(email);
     if (checkEmail) throw errors.duplicatedEmailError();
 
 
     const hashPassword: string = await bcrypt.hash(password, 10)
-    await userRepository.createUser({ name, email, password: hashPassword })
+    await userRepository.createUser({ name, email, image, password: hashPassword })
 }
 
 async function findUsers() {
     const users = await userRepository.findUsers();
     if (users.length === 0) return [];
     return users;
+}
+
+async function findUserByEmail(email: string){
+    const user = await userRepository.findByEmail(email);
+
+    return user
 }
 
 async function loginUser({ email, password }: NewLogin) {
@@ -50,5 +56,6 @@ export default {
     createUser,
     findUsers,
     loginUser,
-    deleteUser
+    deleteUser,
+    findUserByEmail
 }

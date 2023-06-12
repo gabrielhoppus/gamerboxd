@@ -11,10 +11,12 @@ model User {
   id        Int       @id @default(autoincrement())
   name      String    @db.VarChar(50)
   email     String    @unique @db.VarChar(50)
+  image     String    @db.VarChar(255)
   password  String    @db.VarChar(60)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Session   Session[]
+  Review      Review[]
 }
 
 model Session {
@@ -24,4 +26,22 @@ model Session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Game {
+  id           Int       @id
+  title        String?   @db.VarChar(80)
+  created_at   DateTime  @default(now()) @db.Timestamp(6)
+  release_date String?   @db.VarChar(10)
+  Review      Review[]
+}
+
+model Review {
+  id      Int      @id @default(autoincrement())
+  game_id Int?
+  user_id Int?
+  review  String?
+  grade   Decimal? @db.Decimal()
+  Game   Game?   @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  User   User?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
