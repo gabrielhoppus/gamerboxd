@@ -36,12 +36,12 @@ async function loginUser({ email, password }: NewLogin) {
 
     const userId = Number(user.id)
     const token = jwt.sign({ userId }, process.env.SECRET_KEY);
-    await userRepository.loginUser(
+    const userInfo = await userRepository.loginUser(
         token,
         userId
     );
 
-    return token;
+    return userInfo;
 }
 
 async function deleteUser(id: string) {

@@ -1,5 +1,6 @@
 import { NewUser } from "@/protocols/user.protocol";
 import prisma from "@/config/database.connection";
+import { transformDocument } from "@prisma/client/runtime";
 
 
 async function findByEmail(email: string) {
@@ -36,6 +37,15 @@ async function createUser( user : NewUser) {
             }, 
             update: {
                 token
+            },
+            select: {
+                token: true,
+                User: {
+                    select: {
+                        name: true,
+                        image: true,
+                    }
+                }
             }
         })
     }

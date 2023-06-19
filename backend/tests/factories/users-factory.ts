@@ -6,24 +6,22 @@ import { NewLogin } from '@/protocols/user.protocol';
 
 export async function createUser(params: Partial<UserEntity> = {}) {
   const incomingPassword = params.password || faker.internet.password(6);
-  const hashedPassword = await bcrypt.hash(incomingPassword, 10);
 
-  return prisma.user.create({
+  return await prisma.user.create({
     data: {
       name: faker.name.fullName(),
       email: params.email || faker.internet.email(),
-      password: hashedPassword,
+      image: faker.image.imageUrl(),
+      password: incomingPassword,
     },
   });
 }
 
-export async function loginUser(token: string, id: number) {
-  return await prisma.session.update({
-    where: {
-        id,
-    },
+export async function loginUser(token: string, userId: number) {
+  return await prisma.session.create({
     data: {
-        token,
+      token,
+      userId,
     }
-})
+  })
 }

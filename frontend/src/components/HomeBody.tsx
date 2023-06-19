@@ -1,8 +1,8 @@
 import useInfo from "../hooks/useInfo";
-import Celeste from "../../public/Celeste.png"
-import Diablo from "../../public/Diablo4.png"
-import EldenRing from "../../public/EldenRing.png"
-import HK from "../../public/HK.png"
+import Celeste from "../assets/Celeste.png"
+import Diablo from "../assets/Diablo4.png"
+import EldenRing from "../assets/EldenRing.png"
+import HK from "../assets/HK.png"
 
 export default function HomeBody() {
   const user = useInfo();

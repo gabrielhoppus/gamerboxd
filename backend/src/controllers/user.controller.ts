@@ -22,9 +22,8 @@ export async function loginUser(req: Request, res: Response, next: NextFunction)
     const { email, password } = req.body as NewLogin;
     try {
         const token = await userService.loginUser({ email, password });
-        const user = await userService.findUserByEmail(email);
 
-        return res.status(200).send({ token: token, user: user })
+        return res.status(200).send(token)
     } catch (err) {
         next(err);
     }
