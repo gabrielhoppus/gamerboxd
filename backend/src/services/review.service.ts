@@ -4,9 +4,10 @@ import gameService from "./game.service";
 
 
 async function postReview(game_id: number, user_id: number, review: string, grade: number){
-    const entry = await reviewRepository.makeReview(game_id, user_id, review, grade);
     await gameService.addGame(game_id)
 
+    const entry = await reviewRepository.makeReview(game_id, user_id, review, grade);
+    
     return entry;
 }
 

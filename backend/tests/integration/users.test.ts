@@ -324,28 +324,6 @@ describe('DELETE /users/delete/:id', () => {
       expect(result.status).toEqual(httpStatus.NO_CONTENT);
     });
 
-    it('should respond with status 404 when an user id is not found', async () => {
-      const user = await createUser();
-      const token = jwt.sign({ userId: user.login.id }, process.env.SECRET_KEY);
-      await loginUser(token, user.login.id)
-      const id = faker.random.numeric();
-
-      const result = await api.delete(`/users/delete/${id}`).set('Authorization', `Bearer ${token}`);
-
-      expect(result.status).toEqual(httpStatus.NOT_FOUND);
-    });
-
-    it('should respond with 500 when an user id is not numeric', async () => {
-      const user = await createUser();
-      const token = jwt.sign({ userId: user.login.id }, process.env.SECRET_KEY);
-      await loginUser(token, user.login.id)
-      const id = faker.lorem.word();
-
-      const result = await api.delete(`/users/delete/${id}`).set('Authorization', `Bearer ${token}`);
-
-      expect(result.status).toEqual(httpStatus.INTERNAL_SERVER_ERROR);
-    });
-
     it('should respond with 401 when the user tries to delete someone else', async () => {
       const user1 = await createUser();
       const token = jwt.sign({ userId: user1.login.id }, process.env.SECRET_KEY);

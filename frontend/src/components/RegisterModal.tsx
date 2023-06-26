@@ -18,7 +18,7 @@ export default function RegisterModal({ RegisterVisible, onClose }: RegisterProp
   function userSignup(e: any){
     e.preventDefault();
     const body = { name, email, image, password, confirmation: confirmPassword };
-    axios.post(`http://localhost:5000/users/signup`, body)
+    axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/users/signup`, body)
       .then(() => {
         alert("Cadastro realizado com sucesso!");
         setName('');

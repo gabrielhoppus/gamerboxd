@@ -21,7 +21,7 @@ export default function LoginModal({ LoginVisible, onClose, setHeaderBackground 
   async function userSignin(e: any) {
     e.preventDefault();
     const body = { email, password };
-    await axios.post(`http://localhost:5000/users/signin`, body)
+    await axios.post(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/users/signin`, body)
       .then((res) => {
         setUserData(res.data)
         alert("Login realizado com sucesso!");

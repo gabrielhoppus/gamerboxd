@@ -35,9 +35,8 @@ export async function loginUser(req: AuthenticatedRequest, res: Response, next: 
 export async function deleteUser(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const { id } = req.params;
     const { userId } = req;
+    
     try {
-        console.log(id);
-        console.log(userId)
         await userService.deleteUser(Number(id), Number(userId))
         return res.sendStatus(httpStatus.NO_CONTENT)
     } catch (err) {

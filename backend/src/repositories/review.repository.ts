@@ -27,6 +27,14 @@ async function getReviewByGameId(game_id: number){
     return await prisma.review.findMany({
         where:{
             game_id
+        },
+        include: {
+            User: {
+                select: {
+                    name: true,
+                    image: true,
+                }
+            }
         }
     })
 }

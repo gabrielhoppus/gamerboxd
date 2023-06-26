@@ -9,7 +9,7 @@ gameRoutes
     .get('/', getGames)
     .get('/popular', getLatestGames)
     .get('/:id', getGamesById)
-    .get('/:title', getGamesByName)
+    .get('/game/:title', getGamesByName)
 
 
 export default gameRoutes;

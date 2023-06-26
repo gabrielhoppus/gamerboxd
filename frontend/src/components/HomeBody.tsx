@@ -9,9 +9,10 @@ export default function HomeBody() {
   const navigate = useNavigate();
   const [popular, setPopular] = useState<any[]>([]);
   const background = '[#1D232A]'
+  const opacity = 'opacity-100'
 
   async function getPopularGames() {
-    await axios.get('http://localhost:5000/games/popular')
+    await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/games/popular`)
       .then((res) => {
         setPopular(res.data);
       })
@@ -19,16 +20,16 @@ export default function HomeBody() {
 
   const handleClick = (id: any) => {
     navigate(`/games/${id}`);
-}
+  }
 
   useEffect(() => {
-    getPopularGames()  
+    getPopularGames()
   }, [])
 
   return (
     <>
       <div className="Body bg-gray-900 w-auto h-auto flex flex-col items-center">
-        <HomeHeader BackgroundColor={background} />
+        <HomeHeader BackgroundColor={background} Opacity={opacity} />
         <a href="https://diablo4.blizzard.com/pt-br/" target="_blank" className="BannerContainer w-[1200px] h-[200px] bg-white mt-16 bg-[url('/d4.png')] bg-no-repeat bg-center flex cursor-pointer" />
         <div className="WelcomeMessage title text-white text-5xl font-serif font-bold text-center mt-9">Welcome back, {user.name}.<br></br> Here's what we've been gaming...</div>
         <div className="NewContainer w-[1200px] flex items-start flex-col">

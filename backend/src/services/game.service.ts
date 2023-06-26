@@ -32,12 +32,13 @@ async function addGame(id: number) {
 }
 
 async function getGameByName(title: string) {
-  const results = await request.get(`${process.env.GAME_URL}/games?key=${process.env.GAME_KEY}&search=${title}`);
+  const results = await request.get(`${process.env.GAME_URL}/games?key=${process.env.GAME_KEY}&search=${title}&page=1&page_size=4`);
 
-  if (!results.data) {
+  if (!results.data.results) {
     throw errors.notFoundError();
   }
-  return results;
+
+  return results.data.results;
 }
 
 async function getLatestGames() {

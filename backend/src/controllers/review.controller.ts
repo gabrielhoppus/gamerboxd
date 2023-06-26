@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import reviewService from "@/services/review.service";
 import httpStatus from "http-status";
+import { AuthenticatedRequest } from "@/middlewares/authentication-middleware";
 
 export async function getReviews(req: Request, res: Response, next: NextFunction) {
   try {
@@ -11,14 +12,15 @@ export async function getReviews(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function makeReview(req: Request, res: Response, next: NextFunction) {
+export async function makeReview(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const { review, grade } = req.body;
+  const { game_id } = req.params;
+  const { userId } = req;
+
   try {
-    const { review, grade } = req.body;
-    const game_id = Number(req.params.game_id);
-    const userId = req;
-
-    const entry = await reviewService.postReview(game_id, Number(userId), review, grade)
-
+    console.log('1')
+    const entry = await reviewService.postReview(Number(game_id), Number(userId), review, grade)
+    console.log('2')
     return res.send(entry);
   } catch (err) {
     next(err)
@@ -26,8 +28,7 @@ export async function makeReview(req: Request, res: Response, next: NextFunction
 }
 
 export async function getReviewByGame(req: Request, res: Response, next: NextFunction) {
-  const id = Number(req.params);
-  
+  const { id } = req.params;
 
   try {
     const reviews = await reviewService.getReviewsByGameId(Number(id));
