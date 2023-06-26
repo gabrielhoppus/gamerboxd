@@ -37,7 +37,6 @@ async function getGameByName(title: string) {
   if (!results.data.results) {
     throw errors.notFoundError();
   }
-
   return results.data.results;
 }
 
