@@ -7,8 +7,9 @@ const gameRoutes = Router();
 
 gameRoutes
     .get('/', getGames)
+    .get('/popular', getLatestGames)
     .get('/:id', getGamesById)
     .get('/:title', getGamesByName)
-    .get('/popular', getLatestGames)
+
 
 export default gameRoutes;

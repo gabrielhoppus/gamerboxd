@@ -17,7 +17,7 @@ export default function RegisterModal({ RegisterVisible, onClose }: RegisterProp
 
   function userSignup(e: any){
     e.preventDefault();
-    const body = { name, email, image, password };
+    const body = { name, email, image, password, confirmation: confirmPassword };
     axios.post(`http://localhost:5000/users/signup`, body)
       .then(() => {
         alert("Cadastro realizado com sucesso!");
@@ -30,7 +30,6 @@ export default function RegisterModal({ RegisterVisible, onClose }: RegisterProp
       })
       .catch((err) => {
         alert(err.message);
-        onClose();
       })
   }
 

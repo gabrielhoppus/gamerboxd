@@ -1,7 +1,7 @@
 import errors from "@/errors/index";
 import { request } from '@/utils/request';
 import { gameRepository } from "@/repositories/game.repository";
-import { GameEntity, ApiEntity } from "@/protocols/game.protocols";
+import { GameEntity } from "@/protocols/game.protocols";
 
 async function getAllGames() {
   const games = await gameRepository.findAllGames();
@@ -15,21 +15,16 @@ async function getGameById(id: number) {
     throw errors.notFoundError();
   }
 
-  const { name, released } = result.data as ApiEntity;
+  const game = result.data;
 
-  const game: GameEntity = {
-    id: id,
-    title: name,
-    released: released,
-  };
   return game;
 }
 
 async function addGame(id: number) {
   try {
-    const { title, released } = await getGameById(id) as GameEntity;
+    const game = await getGameById(id) as GameEntity;
 
-    await gameRepository.addGame(id, title, released)
+    await gameRepository.addGame(id, game.title, game.released)
 
   } catch {
     throw errors.invalidDataError(['Id inválido']);
@@ -47,14 +42,16 @@ async function getGameByName(title: string) {
 
 async function getLatestGames() {
   const firstDate = new Date(new Date().getFullYear(), 0, 1);
+
   const currentDate = new Date();
-  const result = await request.get(`${process.env.GAME_URL}/games?key=${process.env.GAME_KEY}&dates=${firstDate},${currentDate}&ordering=-added&page=1&page_size=4`)
+
+  const result = await request.get(`${process.env.GAME_URL}/games?key=${process.env.GAME_KEY}&dates=${firstDate.toISOString().slice(0, 10)},${currentDate.toISOString().slice(0, 10)}&ordering=-added&page=1&page_size=4`)
 
   if (!result.data) {
     throw errors.notFoundError();
   }
 
-  return result;
+  return result.data;
 }
 
 export default {

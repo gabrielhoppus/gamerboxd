@@ -10,10 +10,10 @@ export async function cleanDb() {
 }
 
 export async function generateValidToken(user: UserEntity) {
-    const incomingUser = user || (await createUser());
-    const token = jwt.sign({ userId: incomingUser.id}, process.env.SECRET_KEY);
+    const incomingUser =  await createUser();
+    const token = jwt.sign({ userId: incomingUser.login.id}, process.env.SECRET_KEY);
 
-    await loginUser(token, incomingUser.id);
+    await loginUser(token, incomingUser.login.id);
 
     return token;
 }

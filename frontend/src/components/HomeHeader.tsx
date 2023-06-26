@@ -1,14 +1,18 @@
 import useInfo from "../hooks/useInfo";
 import Logo from '../assets/letterbox.png';
 
-export default function HomeHeader() {
+type BackgroundProps = {
+  BackgroundColor: any,
+  Opacity: any
+}
 
+export default function HomeHeader({BackgroundColor, Opacity}: BackgroundProps) {
   const user = useInfo();
 
   return (
-    <div className={`header bg-[#1D232A] w-screen h-28 flex space-x-48 items-center`}>
-      <div className='logo-container flex items-center'>
-        <img src={Logo} className='logo h-28 w-28 ml-48' />
+    <div className={`header bg-${BackgroundColor} w-full h-28 flex space-x-48 items-center bg-${Opacity}`}>
+      <div className='logo-container flex items-center ml-32'>
+        <img src={Logo} className='logo h-28 w-28 ml-' />
         <h1 className='title text-white text-5xl font-serif font-bold'>Gamerboxd</h1>
       </div>
       <div className='menu-container flex text-gray-200 font-serif font-bold text-2xl space-x-8 items-center'>
@@ -31,7 +35,6 @@ export default function HomeHeader() {
               id="game"
               className="mt-[10px] w-[200px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search games"
-              value={''}
               required />
           </div>
       </div>

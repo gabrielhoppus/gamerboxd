@@ -4,6 +4,7 @@ export type UserEntity = {
     email: string,
     image: string,
     password: string,
+    confirmation: string,
     token: string,
 }
 
@@ -25,4 +26,5 @@ export type checkId = {
 
 
 export type NewUser = Omit<UserEntity, "id" | "token">
+export type NewUserEntity = Omit<UserEntity, "id" | "token" | "confirmation">
 

@@ -1,6 +1,5 @@
-import { NewUser } from "@/protocols/user.protocol";
+import { NewUser, NewUserEntity } from "@/protocols/user.protocol";
 import prisma from "@/config/database.connection";
-import { transformDocument } from "@prisma/client/runtime";
 
 
 async function findByEmail(email: string) {
@@ -11,7 +10,7 @@ async function findByEmail(email: string) {
     })
 }
 
-async function createUser( user : NewUser) {
+async function createUser( user : NewUserEntity) {
     return await prisma.user.create({
         data: user
     });

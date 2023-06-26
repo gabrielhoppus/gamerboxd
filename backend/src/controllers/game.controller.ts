@@ -22,10 +22,10 @@ export async function addGame(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function getGamesById(req: Request, res: Response, next: NextFunction) {
-    const id = Number(req.params);
+    const { id } = req.params;
 
     try {
-        const game = await gameService.getGameById(id);
+        const game = await gameService.getGameById(parseInt(id));
         return res.send(game);
     } catch (err) {
         next(err)
@@ -46,7 +46,8 @@ export async function getGamesByName(req: Request, res: Response, next: NextFunc
 export async function getLatestGames(req: Request, res: Response, next: NextFunction) {
     try {
         const games = await gameService.getLatestGames();
-        return res.send(games);
+
+        return res.send(games.results);
     } catch (err) {
         next(err)
     }
