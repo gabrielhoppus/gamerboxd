@@ -12,8 +12,8 @@ jobs:
           envkey_PORT: 5000
           envkey_POSTGRES_USER: "postgres"
           envkey_POSTGRES_PASSWORD: "postgres"
-          envkey_POSTGRES_DB: "gamerboxd_test"
-          envkey_DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/gamerboxd_test"
+          envkey_POSTGRES_DB: "gamerboxd"
+          envkey_DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/gamerboxd"
           directory: backend
           file_name: .env.test
       - name: Run tests
